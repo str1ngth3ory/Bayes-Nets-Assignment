@@ -46,13 +46,6 @@ Finally, commit the new updates to your branch and continue developing:
 `git commit -am "<funny message vilifying TAs for the update>"`
 
 
-# Installing libraries:-
-
-Install dependency
-
-pip install -r requirements.txt
-
-
 # Submit your code
 A friendly reminder: please ensure that your submission is in `probability_solution.py`. 
 To submit your code and have it evaluated, please use `python submit.py assignment_3`.
