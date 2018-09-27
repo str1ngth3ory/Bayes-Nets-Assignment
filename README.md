@@ -127,7 +127,7 @@ Modeling a three-variable relationship is a bit trickier. If you wanted to set t
 
 you would invoke
 
-    cpd_agt = TabularCPD('A', 2, values=[[0.9, 0.1, 0.8, 0.4], \
+    cpd_agt = TabularCPD('A', 2, values=[[0.9, 0.8, 0.4, 0.85], \
                         [0.1, 0.2, 0.6, 0.15]], evidence=['G', 'T'], evidence_card=[2, 2])
 
 The key is to remember that first entery represents the probaility for P(A==False), and second entry represents P(A==true).
