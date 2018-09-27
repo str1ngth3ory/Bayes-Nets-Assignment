@@ -5,5 +5,5 @@ requests==2.13.0
 networkx==1.11
 scipy==0.18.0
 pandas==0.18.1
-wrapt=1.10.11
+wrapt==1.10.11
 pgmpy
