@@ -1,20 +1,8 @@
-"""Testing pbnt. Run this before anything else to get pbnt to work!"""
 import sys
-
-if('pbnt/combined' not in sys.path):
-    sys.path.append('pbnt/combined')
-from exampleinference import inferenceExample
-
-inferenceExample()
-# Should output:
-# ('The marginal probability of sprinkler=false:', 0.80102921)
-#('The marginal probability of wetgrass=false | cloudy=False, rain=True:', 0.055)
 
 '''
 WRITE YOUR CODE BELOW.
 '''
-
-
 from Node import BayesNode
 from Graph import BayesNet
 from numpy import zeros, float32
@@ -22,25 +10,25 @@ import Distribution
 from Distribution import DiscreteDistribution, ConditionalDiscreteDistribution
 from Inference import JunctionTreeEngine, EnumerationEngine
 
+# You can only use following modules from pgmpy
+from pgmpy.models import BayesianModel
+from pgmpy.factors.discrete import TabularCPD
+from pgmpy.inference import VariableElimination
 
 def make_power_plant_net():
     """Create a Bayes Net representation of the above power plant problem. 
     Use the following as the name attribute: "alarm","faulty alarm", "gauge","faulty gauge", "temperature". (for the tests to work.)
     """
-    nodes = []
+    BayesNet = BayesianModel()
     # TODO: finish this function    
     raise NotImplementedError
-    return BayesNet(nodes)
+    return BayesNet
 
 
 def set_probability(bayes_net):
-    """Set probability distribution for each node in the power plant system."""    
-    A_node = bayes_net.get_node_by_name("alarm")
-    F_A_node = bayes_net.get_node_by_name("faulty alarm")
-    G_node = bayes_net.get_node_by_name("gauge")
-    F_G_node = bayes_net.get_node_by_name("faulty gauge")
-    T_node = bayes_net.get_node_by_name("temperature")
-    nodes = [A_node, F_A_node, G_node, F_G_node, T_node]
+    """Set probability distribution for each node in the power plant system.
+    Use the following as the name attribute: "alarm","faulty alarm", "gauge","faulty gauge", "temperature". (for the tests to work.)
+    """
     # TODO: set the probability distribution for each node
     raise NotImplementedError    
     return bayes_net
@@ -80,10 +68,10 @@ def get_temperature_prob(bayes_net):
 def get_game_network():
     """Create a Bayes Net representation of the game problem.
     Name the nodes as "A","B","C","AvB","BvC" and "CvA".  """
-    nodes = []
+    BayesNet = BayesianModel()
     # TODO: fill this out
     raise NotImplementedError    
-    return BayesNet(nodes)
+    return BayesNet
 
 
 def calculate_posterior(bayes_net):
@@ -119,10 +107,10 @@ def MH_sampler(bayes_net, initial_state):
     index 3-5: represent results of matches AvB, BvC, CvA (values lie in [0,2] inclusive)    
     Returns the new state sampled from the probability distribution as a tuple of length 6. 
     """
-    A= bayes_net.get_node_by_name("A")      
-    AvB= bayes_net.get_node_by_name("AvB")
-    match_table = AvB.dist.table
-    team_table = A.dist.table
+    A_cpd = bayes_net.get_cpds("A")      
+    AvB_cpd = bayes_net.get_cpds("AvB")
+    match_table = AvB_cpd.values
+    team_table = A_cpd.values
     sample = tuple(initial_state)    
     # TODO: finish this function
     raise NotImplementedError    

@@ -1,4 +1,4 @@
-## CS 6601 Assignment 3: Probabilistic Modeling
+## CS 6601 Assignment 3e: Probabilistic Modeling (for on-campus students)
 
 In this assignment, you will work with probabilistic models known as Bayesian networks to efficiently calculate the answer to probability questions concerning discrete random variables.
 
@@ -19,7 +19,7 @@ Other:
 
 ### Setup
 
-`git clone https://github.gatech.edu/omscs6601/assignment_3.git`
+`git clone https://github.gatech.edu/omscs6601/assignment_3_oncampus.git`
 
 Python 2.7 is recommended and has been tested.
 
@@ -30,12 +30,12 @@ Read [setup.md](./setup.md) for more information regarding set up and using git 
 ### Submission and Due Date
 
 Please include all of your own code for submission in `probability_solutions.py`.  
-Submit this file using **`python submit.py assignment_3`**.  
+Submit this file using **`python submit.py assignment_3e`**.  
 **The output of all your submissions can be found on [bonnie.udacity.com](https://bonnie.udacity.com/).**
 
-This assignment is due on both **Bonnie and T-Square by October 8th, 2018 11:59PM UTC-12.**  The submission on T-Square is a backup just in case, and the submission to Bonnie will be officially used for grading.
+This assignment is due on both **Bonnie and Canvas by October 8th, 2018 11:59PM UTC-12.**  The submission on Canvas is a backup just in case, and the submission to Bonnie will be officially used for grading.
 
-**Important: There is a TOTAL submission limit of 5 on Bonnie for assignment 3. This means you can submit to Bonnie a maximum of 5 times during the duration of the assignment. Please use your submissions carefully and do not submit until you have thoroughly tested your code locally.**
+**Important: There is a TOTAL submission limit of 5 on Bonnie for assignment 3e. This means you can submit to Bonnie a maximum of 5 times during the duration of the assignment. Please use your submissions carefully and do not submit until you have thoroughly tested your code locally.**
 
 **If you're at 4 submissions, use your fifth and last submission wisely. We are not responsible for a final submission that gets a lower score than a previous submission. We will only use your LAST submission before the deadline for grading.**
 
@@ -48,13 +48,13 @@ To start, design a basic probabilistic model for the following system:
 
 There's a nuclear power plant in which an alarm is supposed to ring when the gauge reading exceeds a fixed threshold. The gauge reading is based on the actual temperature, and for simplicity, we assume that the temperature is represented as either high or normal. However, the alarm is sometimes faulty. The temperature gauge can also fail, with the chance of failing greater when the temperature is high.
 
-Use the following Boolean variables in your implementation:
+Use the following name attributes:
 
-> - A = alarm sounds
-> - F<sub>A</sub> = alarm is faulty
-> - G = gauge reading (high = True, normal = False)
-> - F<sub>G</sub> = gauge is faulty
-> - T = actual temperature (high = True, normal = False)
+>- "alarm"
+>- "faulty alarm"
+>- "gauge"                      (high = True, normal = False)
+>- "faulty gauge"
+>- "temperature"             (high = True, normal = False)  
 
 You will test your implementation at the end of the section.
 
@@ -62,18 +62,20 @@ You will test your implementation at the end of the section.
 
 _[10 points]_
 
-Use the description of the model above to design a Bayesian network for this model. The included pbnt package is used to represent nodes and conditional probability arcs connecting nodes. Don't worry about the probabilities for now. Use the functions below to create the net. Fill in the function make\_power\_plant\_net()
+Use the description of the model above to design a Bayesian network for this model. The included 'pgmpy' package is used to represent nodes and conditional probability arcs connecting nodes. Don't worry about the probabilities for now. Use the functions below to create the net. Fill in the function make\_power\_plant\_net()
 
-The following command will create a BayesNode with 2 values, an id of 0 and the name "alarm":
+The following commands will create a BayesNet instance add node with name "alarm":
 
-    A_node = BayesNode(0,2,name='alarm')
+    BayesNet = BayesianModel()
+    BayesNet.add_node("alarm")
 
-You will use BayesNode.add\_parent() and BayesNode.add\_child() to connect nodes. For example, to connect the alarm and temperature nodes that you've already made (i.e. assuming that temperature affects the alarm probability):
+You will use BayesNet.add\_edge() to connect nodes. For example, to connect the alarm and temperature nodes that you've already made (i.e. assuming that temperature affects the alarm probability):
 
-    A_node.add_parent(T_node)
-    T_node.add_child(A_node)
+Use function BayesianModel.add\_edge(\<parent node name\>,\<child node name\>)
     
-You can run probability\_tests.network\_setup\_test() to make sure your network is set up correctly.
+    BayesNet.add_edge("temperature","alarm")
+
+You can run probability\_tests.test\_network\_setup() to make sure your network is set up correctly.
 
 ### 1b: Setting the probabilities
 
@@ -89,12 +91,9 @@ Assume that the following statements about the system are true:
 
 Knowing these facts, set the conditional probabilities for the necessary variables on the network you just built.
 
-Using pbnt's Distribution class: if you wanted to set the distribution for P(A) to 70% true, 30% false, you would invoke the following commands:
+Using pgmpy's factors.discrete.TabularCPD class: if you wanted to set the distribution for node 'A' with two possible values, where P(A) to 70% true, 30% false, you would invoke the following commands:
 
->     A_distribution = DiscreteDistribution(A_node)
->     index = A_distribution.generate_index([],[])
->     A_distribution[index] = [0.3,0.7]
->     A_node.set_dist(A_distribution)
+    cpd_a = TabularCPD('A', 2, values=[[0.3], [0.7]])
 
 **Use index 0 to represent FALSE and index 1 to represent TRUE, or you may run into testing issues.**
 
@@ -107,12 +106,8 @@ If you wanted to set the distribution for P(A|G) to be
 
 you would invoke:
 
-    from numpy import zeros, float32
-    dist = zeros([G_node.size(), A_node.size()], dtype=float32)   #Note the order of G_node, A_node
-    dist[0,:] = [0.15, 0.85]  # probabilities for A when G is FALSE
-    dist[1,:] = [0.25, 0.75]  # probabilities for A given G is TRUE
-    A_distribution = ConditionalDiscreteDistribution(nodes=[G_node,A_node], table=dist)
-    A_node.set_dist(A_distribution)
+    cpd_ag = TabularCPD('A', 2, values=[[0.15, 0.25], \
+                        [ 0.85, 0.75]], evidence=['G'], evidence_card=[2])
 
 Modeling a three-variable relationship is a bit trickier. If you wanted to set the following distribution for P(A|G,T) to be
 
@@ -123,19 +118,17 @@ Modeling a three-variable relationship is a bit trickier. If you wanted to set t
 |F|T|0.2|
 |F|F|0.1|
 
-you would invoke:
+you would invoke
 
-    from numpy import zeros, float32
-    dist = zeros([G_node.size(), T_node.size(), A_node.size()], dtype=float32)
-    dist[0,0,:] = [0.9, 0.1]
-    dist[0,1,:] = [0.8, 0.2]
-    dist[1,0,:] = [0.4, 0.6]
-    dist[1,1,:] = [0.85, 0.15]
-    
-    A_distribution = ConditionalDiscreteDistribution(nodes=[G_node, T_node, A_node], table=dist)
-    A_node.set_dist(A_distribution)
+    cpd_agt = TabularCPD('A', 2, values=[[0.9, 0.1, 0.8, 0.4], \
+                        [0.1, 0.2, 0.6, 0.15]], evidence=['G', 'T'], evidence_card=[2, 2])
 
-The key is to remember that 0 represents the index of the false probability, and 1 represents true.
+The key is to remember that first entery represents the probaility for P(A==False), and second entry represents P(A==true).
+
+Add Tabular conditional probability distributions to the bayesian model instance by using following command.
+
+    bayes_net.add_cpds(cpd_a, cpd_ag, cpd_agt)
+
 
 You can check your probability distributions with probability_tests.probability_setup_test().
 
@@ -153,19 +146,16 @@ You'll fill out the "get_prob" functions to calculate the probabilities.
 
 Here's an example of how to do inference for the marginal probability of the "faulty alarm" node being True (assuming "bayes_net" is your network):
 
-    F_A_node = bayes_net.get_node_by_name('faulty alarm')
-    engine = JunctionTreeEngine(bayes_net)
-    Q = engine.marginal(F_A_node)[0]
-    index = Q.generate_index([True],range(Q.nDims))
-    prob = Q[index]
+    solver = VariableElimination(bayes_net)
+    marginal_prob = solver.query(variables=['faulty alarm'])
+    prob = marginal_prob['faulty alarm'].values
   
-To compute the conditional probability, set the evidence variables before computing the marginal as seen below (here we're computing P(A = false | F_A = true, T = False)):
+To compute the conditional probability, set the evidence variables before computing the marginal as seen below (here we're computing P('A' = false | 'B' = true, 'C' = False)):
 
-    engine.evidence[F_A_node] = True
-    engine.evidence[T_node] = False
-    Q = engine.marginal(A_node)[0]
-    index = Q.generate_index([False],range(Q.nDims))
-    prob = Q[index]
+
+    solver = VariableElimination(bayes_net)
+    marginal_prob = solver.query(variables=['A'],evidence={'B':1,'C':0})
+    prob = marginal_prob['A'].values
 
 If you need to sanity-check to make sure you're doing inference correctly, you can run inference on one of the probabilities that we gave you in 1b. For instance, running inference on P(T=true) should return 0.19999994 (i.e. almost 20%). You can also calculate the answers by hand to double-check.
 
@@ -199,6 +189,17 @@ Build a Bayes Net to represent the three teams and their influences on the match
 |BvC | the outcome of B vs. C <br> (0 = B wins, 1 = C wins, 2 = tie)|
 |CvA | the outcome of C vs. A <br> (0 = C wins, 1 = A wins, 2 = tie)|
 
+
+Use the following name attributes:
+
+>- "A"
+>- "B"
+>- "C"  
+>- "AvB"
+>- "BvC"
+>- "CvA"
+
+
 Assume that each team has the following prior distribution of skill levels:
 
 |skill level|P(skill level)|
@@ -223,7 +224,7 @@ _[5 points]_
 
 Suppose that you know the following outcome of two of the three games: A beats B and A draws with C. Calculate the posterior distribution for the outcome of the **BvC** match in calculate_posterior(). 
 
-Use the **EnumerationEngine** provided to perform inference (EnumerationEngine can be used the same way described for JunctionTreeEngine above). 
+Use the **VariableElimination** provided to perform inference (VariableElimination can be used the same way described for JunctionTreeEngine above). 
 
 In the next two sections, we'll be arriving at the same values by using sampling.
 
@@ -231,13 +232,11 @@ In the next two sections, we'll be arriving at the same values by using sampling
 
 Hint 1: In both Metropolis-Hastings and Gibbs sampling, you'll need access to each node's probability distribution and nodes. 
 You can access these by calling: 
-    
-    A = bayes_net.get_node_by_name("A")      
-    team_table = A.dist.table
-    AvB = bayes_net.get_node_by_name("AvB")
-    match_table = AvB.dist.table
-    
-which will return the same numpy array that you provided when constructing the probability distribution.
+
+    A_cpd = bayes_net.get_cpds('A')      
+    team_table = A_cpd.values
+    AvB_cpd = bayes_net.get_cpds("AvB")
+    match_table = AvB_cpd.values
 
 Hint 2: you'll also want to use the random package (e.g. random.randint()) for the probabilistic choices that sampling makes.
 
@@ -285,7 +284,7 @@ We'll say that the sampler has converged when, for "N" successive iterations, th
 
 Use the functions from 2c and 2d to measure how many iterations it takes for Gibbs and MH to converge to a stationary distribution over the posterior. See for yourself how close (or not) this stable distribution is to what the Inference Engine returned in 2b. And if not, try tuning those parameters(N and delta). (You might find the concept of "burn-in" period useful). 
 
-For the purpose of this assignment, we'll say that the sampler has converged when, for 10 successive iterations, the difference in expected outcome for the third match differs from the previous estimated outcome by delta less than 0.001.
+You can choose any N and delta (with the bounds above), as long as the convergence criterion is eventually met. For the purpose of this assignment, we'd recommend using a delta approximately equal to 0.001 and N at least as big as 10. 
 
 Repeat this experiment for Metropolis-Hastings sampling.
 
