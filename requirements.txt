@@ -1,4 +1,8 @@
-numpy==1.11
+numpy==1.11.1
 nelson==0.4.0
 future==0.16.0
 requests==2.13.0
+networkx==1.11
+scipy==0.18.0
+pandas==0.18.1
+pgmpy

@@ -1,6 +1,6 @@
 # Setup
 Clone this repository recursively:
-`git clone --recursive https://github.gatech.edu/omscs6601/assignment_3_online.git`
+`git clone --recursive https://github.gatech.edu/omscs6601/assignment_3_oncampus.git`
 
 (If your version of git does not support recurse clone, then clone without the option and run `git submodule init` and `git submodule update`).
 
@@ -44,6 +44,14 @@ The files in conflict are the ones that are "Not staged for commit". Open these 
 Finally, commit the new updates to your branch and continue developing:
 
 `git commit -am "<funny message vilifying TAs for the update>"`
+
+
+# Installing libraries:-
+
+Install dependency
+
+pip install -r requirements.txt
+
 
 # Submit your code
 A friendly reminder: please ensure that your submission is in `probability_solution.py`. 
