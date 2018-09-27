@@ -39,6 +39,13 @@ This assignment is due on both **Bonnie and Canvas by October 8th, 2018 11:59PM 
 
 **If you're at 4 submissions, use your fifth and last submission wisely. We are not responsible for a final submission that gets a lower score than a previous submission. We will only use your LAST submission before the deadline for grading.**
 
+### Restrictions
+
+You are not allowed to use following set of modules from 'pgmpy' Library.
+
+>- pgmpy.sampling.*
+>- pgmpy.factor.*
+>- pgmpy.estimators.*
 
 ## Part 1 Bayesian network tutorial:
 
@@ -52,7 +59,7 @@ Use the following name attributes:
 
 >- "alarm"
 >- "faulty alarm"
->- "gauge"                      (high = True, normal = False)
+>- "gauge"                   (high = True, normal = False)
 >- "faulty gauge"
 >- "temperature"             (high = True, normal = False)  
 
@@ -62,7 +69,7 @@ You will test your implementation at the end of the section.
 
 _[10 points]_
 
-Use the description of the model above to design a Bayesian network for this model. The included 'pgmpy' package is used to represent nodes and conditional probability arcs connecting nodes. Don't worry about the probabilities for now. Use the functions below to create the net. Fill in the function make\_power\_plant\_net()
+Use the description of the model above to design a Bayesian network for this model. The 'pgmpy' package is used to represent nodes and conditional probability arcs connecting nodes. Don't worry about the probabilities for now. Use the functions below to create the net. Fill in the function make\_power\_plant\_net()
 
 The following commands will create a BayesNet instance add node with name "alarm":
 
@@ -224,7 +231,7 @@ _[5 points]_
 
 Suppose that you know the following outcome of two of the three games: A beats B and A draws with C. Calculate the posterior distribution for the outcome of the **BvC** match in calculate_posterior(). 
 
-Use the **VariableElimination** provided to perform inference (VariableElimination can be used the same way described for JunctionTreeEngine above). 
+Use the **VariableElimination** provided to perform inference.
 
 In the next two sections, we'll be arriving at the same values by using sampling.
 
@@ -249,7 +256,7 @@ Implement the Gibbs sampling algorithm, which is a special case of Metropolis-Ha
 
 The method should just consist of a single iteration of the algorithm. If an initial value is not given, default to a state chosen uniformly at random from the possible states.
 
-Note: **DO NOT USE the given inference engines to run the sampling method**, since the whole point of sampling is to calculate marginals without running inference. 
+Note: **DO NOT USE the given inference engines or 'pgmpy' samplers to run the sampling method**, since the whole point of sampling is to calculate marginals without running inference. 
 
 
      "YOU WILL SCORE 0 POINTS ON THIS ASSIGNMENT IF YOU USE THE GIVEN INFERENCE ENGINES FOR THIS PART"

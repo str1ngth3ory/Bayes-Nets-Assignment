@@ -10,10 +10,15 @@ import Distribution
 from Distribution import DiscreteDistribution, ConditionalDiscreteDistribution
 from Inference import JunctionTreeEngine, EnumerationEngine
 
-# You can only use following modules from pgmpy
+#  pgmpy
 from pgmpy.models import BayesianModel
 from pgmpy.factors.discrete import TabularCPD
 from pgmpy.inference import VariableElimination
+#You are not allowed to use following set of modules from 'pgmpy' Library.
+#
+# pgmpy.sampling.*
+# pgmpy.factor.*
+# pgmpy.estimators.*
 
 def make_power_plant_net():
     """Create a Bayes Net representation of the above power plant problem. 
