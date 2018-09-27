@@ -74,9 +74,6 @@ class ProbabilityTests(unittest.TestCase):
         except:
             self.assertTrue(False, msg='Sum of the probabilities for each state is not equal to 1 or CPDs associated with nodes are not consistent with their parents')
 
-        print get_temperature_prob(power_plant,1)
-        print get_gauge_prob(power_plant,1)
-        print get_alarm_prob(power_plant, 1)
 
     #Part 2a Test
     def test_games_network(self):

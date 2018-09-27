@@ -3,14 +3,9 @@ import sys
 '''
 WRITE YOUR CODE BELOW.
 '''
-from Node import BayesNode
-from Graph import BayesNet
 from numpy import zeros, float32
-import Distribution
-from Distribution import DiscreteDistribution, ConditionalDiscreteDistribution
-from Inference import JunctionTreeEngine, EnumerationEngine
-
 #  pgmpy
+import pgmpy
 from pgmpy.models import BayesianModel
 from pgmpy.factors.discrete import TabularCPD
 from pgmpy.inference import VariableElimination
