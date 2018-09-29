@@ -1,7 +1,7 @@
 ## CS 6601 Assignment 3e: Probabilistic Modeling (for on-campus students)
 
 In this assignment, you will work with probabilistic models known as Bayesian networks to efficiently calculate the answer to probability questions concerning discrete random variables.
-
+/\
 ### Resources
 
 Udacity Videos:  
@@ -29,7 +29,7 @@ Read [setup.md](./setup.md) for more information regarding set up and using git 
 
 ### Submission and Due Date
 
-Please include all of your own code for submission in `probability_solutions.py`.  
+Please include all of your own code for submission in `probability_solution.py`.  
 Submit this file using **`python submit.py assignment_3e`**.  
 **The output of all your submissions can be found on [bonnie.udacity.com](https://bonnie.udacity.com/).**
 
