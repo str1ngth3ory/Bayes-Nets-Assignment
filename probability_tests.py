@@ -5,15 +5,15 @@ Contains various local tests for Assignment 3.
 """
 
 class ProbabilityTests(unittest.TestCase):
-         
+
     #Part 1a
     def test_network_setup(self):
         """Test that the power plant network has the proper number of nodes and edges."""
         power_plant = make_power_plant_net()
         nodes = power_plant.nodes()
-        self.assertEquals(len(nodes), 5, msg="incorrect number of nodes")
+        self.assertEqual(len(nodes), 5, msg="incorrect number of nodes")
         total_links = power_plant.number_of_edges()
-        self.assertEquals(total_links, 5, msg="incorrect number of edges between nodes")
+        self.assertEqual(total_links, 5, msg="incorrect number of edges between nodes")
 
     #Part 1b
     def test_probability_setup(self):
@@ -23,16 +23,16 @@ class ProbabilityTests(unittest.TestCase):
         power_plant = set_probability(make_power_plant_net())
         T_node = power_plant.get_cpds('temperature')
         self.assertTrue(T_node is not None, msg='No temperature node initialized')
-            
+
         T_dist = T_node.get_values()
         self.assertEqual(len(T_dist), 2, msg='Incorrect temperature distribution size')
         test_prob = T_dist[0]
-        self.assertEqual(int(test_prob*100), 80, msg='Incorrect temperature distribution')        
+        self.assertEqual(int(test_prob*100), 80, msg='Incorrect temperature distribution')
 
         # then faulty gauge distribution
         F_G_node = power_plant.get_cpds('faulty gauge')
         self.assertTrue(F_G_node is not None, msg='No faulty gauge node initialized')
-        
+
         F_G_dist = F_G_node.get_values()
         rows, cols = F_G_dist.shape
         self.assertEqual(rows, 2, msg='Incorrect faulty gauge distribution size')
@@ -49,7 +49,7 @@ class ProbabilityTests(unittest.TestCase):
         self.assertEqual(len(F_A_dist), 2, msg='Incorrect faulty alarm distribution size')
 
         test_prob = F_A_dist[0]
-        
+
         self.assertEqual(int(test_prob*100), 85, msg='Incorrect faulty alarm distribution')
         # gauge distribution
         # can't test exact probabilities because
@@ -103,7 +103,7 @@ class ProbabilityTests(unittest.TestCase):
         # You can check this for all matches i.e. AvB,BvC,CvA (by replacing the first line)
         AvB_node = games_net.get_cpds('AvB')
         self.assertTrue(AvB_node is not None, 'AvB node not initialized')
-        
+
         AvB_dist = AvB_node.get_values()
         [cols, rows1, rows2] = AvB_node.cardinality
         self.assertEqual(rows1, 4, msg='Incorrect match distribution size')
@@ -125,7 +125,7 @@ class ProbabilityTests(unittest.TestCase):
                 if j<i:
                     if not (x[0]>x[1] and x[0]>x[2]):
                         flag3=False
-                    
+
         self.assertTrue(flag1, msg='Incorrect match distribution for equal skill levels')
         self.assertTrue(flag2 and flag3, msg='Incorrect match distribution: teams with higher skill levels should have higher win probabilities')
 

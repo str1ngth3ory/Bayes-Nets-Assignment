@@ -25,22 +25,22 @@ HONOR_PLEDGE = \
 
 def require_pledges():
   print(LATE_POLICY)
-  ans = raw_input("Please type 'yes' to agree and continue>")
+  ans = input("Please type 'yes' to agree and continue>")
   if ans != "yes":
     raise RuntimeError("Late policy not accepted.")
 
-  print
+  print ("\n")
   print(HONOR_PLEDGE)
-  ans = raw_input("Please type 'yes' to agree and continue>")
+  ans = input("Please type 'yes' to agree and continue>")
   if ans != "yes":
     raise RuntimeError("Honor pledge not accepted")
-  print
+  print("\n")
 
 def display_assignment_3e_output(submission):
   timestamp = "{:%Y-%m-%d-%H-%M-%S}".format(datetime.datetime.now())
 
   while not submission.poll():
-    time.sleep(3.0)
+    time.sleep(10.0)
 
   if submission.feedback():
 
@@ -74,7 +74,7 @@ def main():
     quiz = 'assignment_3e'
     filenames = ["probability_solution.py"]
 
-  print "Submission processing...\n"
+  print ("Submission processing...\n")
   submit('cs6601', 'assignment_3e', filenames)
 
 if __name__ == '__main__':
