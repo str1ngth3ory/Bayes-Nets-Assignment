@@ -1,4 +1,4 @@
-## CS 6601 Assignment 3e: Probabilistic Modeling (for on-campus students)
+## CS 6601 Assignment 3: Probabilistic Modeling
 
 In this assignment, you will work with probabilistic models known as Bayesian networks to efficiently calculate the answer to probability questions concerning discrete random variables.
 /\
@@ -19,9 +19,9 @@ Other:
 
 ### Setup
 
-`git clone https://github.gatech.edu/omscs6601/assignment_3_oncampus.git`
+`git clone https://github.gatech.edu/omscs6601/assignment_3.git`
 
-Python 2.7 is recommended and has been tested.
+Python 3 is recommended and has been tested.
 
 **Please use numpy version 1.11**. Without the correct version, there may be errors. 
 
@@ -30,12 +30,12 @@ Read [setup.md](./setup.md) for more information regarding set up and using git 
 ### Submission and Due Date
 
 Please include all of your own code for submission in `probability_solution.py`.  
-Submit this file using **`python submit.py assignment_3e`**.  
+Submit this file using **`python submit.py assignment_3`**.  
 **The output of all your submissions can be found on [bonnie.udacity.com](https://bonnie.udacity.com/).**
 
-This assignment is due on both **Bonnie and Canvas by October 8th, 2018 11:59PM UTC-12.**  The submission on Canvas is a backup just in case, and the submission to Bonnie will be officially used for grading.
+This assignment is due on both **Bonnie and Canvas by February 24th, 2019 11:59PM UTC-12.**  The submission on Canvas is a backup just in case, and the submission to Bonnie will be officially used for grading.
 
-**Important: There is a TOTAL submission limit of 5 on Bonnie for assignment 3e. This means you can submit to Bonnie a maximum of 5 times during the duration of the assignment. Please use your submissions carefully and do not submit until you have thoroughly tested your code locally.**
+**Important: There is a TOTAL submission limit of 5 on Bonnie for assignment 3. This means you can submit to Bonnie a maximum of 5 times during the duration of the assignment. Please use your submissions carefully and do not submit until you have thoroughly tested your code locally.**
 
 **If you're at 4 submissions, use your fifth and last submission wisely. We are not responsible for a final submission that gets a lower score than a previous submission. We will only use your LAST submission before the deadline for grading.**
 
