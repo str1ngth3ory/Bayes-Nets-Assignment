@@ -62,7 +62,7 @@ def display_assignment_3e_output(submission):
 
 def main():
   parser = argparse.ArgumentParser(description='Submits code to the Udacity site.')
-  parser.add_argument('part', choices = ['assignment_3e'])
+  parser.add_argument('part', choices = ['assignment_3'])
   parser.add_argument('--provider', choices = ['gt', 'udacity'], default = 'gt')
   parser.add_argument('--environment', choices = ['local', 'development', 'staging', 'production'], default = 'production')
   parser.add_argument('--add-data', action='store_true', help='Include this flag to add a data.pickle file that will be available on the test server.')
