@@ -1,6 +1,6 @@
 # Setup
 Clone this repository recursively:
-`git clone --recursive https://github.gatech.edu/omscs6601/assignment_3_oncampus.git`
+`git clone --recursive https://github.gatech.edu/omscs6601/assignment_3.git`
 
 (If your version of git does not support recurse clone, then clone without the option and run `git submodule init` and `git submodule update`).
 
@@ -50,13 +50,3 @@ Finally, commit the new updates to your branch and continue developing:
 A friendly reminder: please ensure that your submission is in `probability_solution.py`. 
 To submit your code and have it evaluated, please use `python submit.py assignment_3`.
 
-# Vagrant
-
-You have the option of using vagrant to make sure that your local code runs in the same environment as the servers on Bonnie (make sure you have [Vagrant](https://www.vagrantup.com/) and [Virtualbox](https://www.virtualbox.org/wiki/Downloads) installed).  To use this option run the following commands in the root directory of your assignment:
-
-```
-vagrant up --provider virtualbox
-vagrant ssh
-```
-
-Your code lives in the `/vagrant` folder within this virtual machine. Changes made to files in your assignment folder will automatically be reflected within the machine.
