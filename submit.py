@@ -69,13 +69,13 @@ def main():
 
   args = parser.parse_args()
 
-  if args.part == 'assignment_3e':
+  if args.part == 'assignment_3':
     require_pledges()
-    quiz = 'assignment_3e'
+    quiz = 'assignment_3'
     filenames = ["probability_solution.py"]
 
   print ("Submission processing...\n")
-  submit('cs6601', 'assignment_3e', filenames)
+  submit('cs6601', 'assignment_3', filenames)
 
 if __name__ == '__main__':
   main()
