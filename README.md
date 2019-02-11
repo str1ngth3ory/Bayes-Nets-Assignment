@@ -23,7 +23,7 @@ Other:
 
 Python 3 is recommended and has been tested.
 
-**Please use numpy version 1.11**. Without the correct version, there may be errors. 
+**Please use numpy version 1.15.4**. Without the correct version, there may be errors. 
 
 Read [setup.md](./setup.md) for more information regarding set up and using git for the assignment.
 
