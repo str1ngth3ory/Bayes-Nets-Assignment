@@ -254,7 +254,7 @@ _[15 points]_
 
 Implement the Gibbs sampling algorithm, which is a special case of Metropolis-Hastings. You'll do this in Gibbs_sampler(), which takes a Bayesian network and initial state value as a parameter and returns a sample state drawn from the network's distribution. In case of Gibbs, the returned state differs from the input state at at-most one variable (randomly chosen).
 
-The method should just consist of a single iteration of the algorithm. If an initial value is not given, default to a state chosen uniformly at random from the possible states.
+The method should just consist of a single iteration of the algorithm. If an initial value is not given (initial state is None or and empty list), default to a state chosen uniformly at random from the possible states.
 
 Note: **DO NOT USE the given inference engines or 'pgmpy' samplers to run the sampling method**, since the whole point of sampling is to calculate marginals without running inference. 
 
