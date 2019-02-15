@@ -12,7 +12,7 @@ from pgmpy.inference import VariableElimination
 #You are not allowed to use following set of modules from 'pgmpy' Library.
 #
 # pgmpy.sampling.*
-# pgmpy.factor.*
+# pgmpy.factors.*
 # pgmpy.estimators.*
 
 def make_power_plant_net():
