@@ -27,7 +27,7 @@ class ProbabilityTests(unittest.TestCase):
         T_dist = T_node.get_values()
         self.assertEqual(len(T_dist), 2, msg='Incorrect temperature distribution size')
         test_prob = T_dist[0]
-        self.assertEqual(int(test_prob*100), 80, msg='Incorrect temperature distribution')
+        self.assertEqual(round(float(test_prob*100)), 80, msg='Incorrect temperature distribution')
 
         # then faulty gauge distribution
         F_G_node = power_plant.get_cpds('faulty gauge')
@@ -39,8 +39,8 @@ class ProbabilityTests(unittest.TestCase):
         self.assertEqual(cols, 2, msg='Incorrect faulty gauge distribution size')
         test_prob1 = F_G_dist[0][1]
         test_prob2 = F_G_dist[1][0]
-        self.assertEqual(int(test_prob2*100), 5, msg='Incorrect faulty gauge distribution')
-        self.assertEqual(int(test_prob1*100), 20, msg='Incorrect faulty gauge distribution')
+        self.assertEqual(round(float(test_prob2*100)), 5, msg='Incorrect faulty gauge distribution')
+        self.assertEqual(round(float(test_prob1*100)), 20, msg='Incorrect faulty gauge distribution')
 
         # faulty alarm distribution
         F_A_node = power_plant.get_cpds('faulty alarm')
@@ -50,7 +50,7 @@ class ProbabilityTests(unittest.TestCase):
 
         test_prob = F_A_dist[0]
 
-        self.assertEqual(int(test_prob*100), 85, msg='Incorrect faulty alarm distribution')
+        self.assertEqual(round(float(test_prob*100)), 85, msg='Incorrect faulty alarm distribution')
         # gauge distribution
         # can't test exact probabilities because
         # order of probabilities is not guaranteed
@@ -96,8 +96,8 @@ class ProbabilityTests(unittest.TestCase):
         self.assertEqual(len(A_dist), 4, msg='Incorrect distribution size for Team A')
         test_prob = A_dist[0]
         test_prob2 = A_dist[2]
-        self.assertEqual(int(test_prob*100),  15, msg='Incorrect distribution for Team A')
-        self.assertEqual(int(test_prob2*100), 30, msg='Incorrect distribution for Team A')
+        self.assertEqual(round(float(test_prob*100)),  15, msg='Incorrect distribution for Team A')
+        self.assertEqual(round(float(test_prob2*100)), 30, msg='Incorrect distribution for Team A')
 
         # Now testing match distributions.
         # You can check this for all matches i.e. AvB,BvC,CvA (by replacing the first line)
