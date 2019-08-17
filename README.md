@@ -1,3 +1,5 @@
+**The assignment is not yet released for the Fall 2019 and might be subject to change.**
+
 ## CS 6601 Assignment 3: Probabilistic Modeling
 
 In this assignment, you will work with probabilistic models known as Bayesian networks to efficiently calculate the answer to probability questions concerning discrete random variables.
