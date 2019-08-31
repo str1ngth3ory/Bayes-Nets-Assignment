@@ -1,28 +1,46 @@
-**The assignment is not yet released for the Fall 2019 and might be subject to change.**
-
 ## CS 6601 Assignment 3: Probabilistic Modeling
 
 In this assignment, you will work with probabilistic models known as Bayesian networks to efficiently calculate the answer to probability questions concerning discrete random variables.
-/\
+
 ### Resources
 
-Udacity Videos:  
+You will find the following resources helpful for this assignment.
+
+*Udacity Videos:*  
 [Lecture 5 on Probability](https://classroom.udacity.com/courses/ud954/lessons/6385118556/concepts/63792297400923)  
 [Lecture 6 on Bayes Nets](https://classroom.udacity.com/courses/ud954/lessons/6381509770/concepts/64119686570923)  
 
-Textbook Chapters:  
-13 Quantifying Uncertainty  
-14 Probabilistic Reasoning  
+*Textbook:*   
+Chapter 13: Quantifying Uncertainty  
+Chapter 14: Probabilistic Reasoning  
 
-Other:  
+*Others:*   
 [Markov Chain Monte Carlo](http://www.statistics.com/papers/LESSON1_Notes_MCMC.pdf)  
 [Gibbs Sampling](http://gandalf.psych.umn.edu/users/schrater/schrater_lab/courses/AI2/gibbs.pdf)  
 [Metropolis Hastings Sampling](http://www.mit.edu/~ilkery/papers/MetropolisHastingsSampling.pdf)
 
 ### Setup
 
-`git clone https://github.gatech.edu/omscs6601/assignment_3.git`
+1. Clone the project repository from Github
 
+   ```
+   git clone https://github.gatech.edu/omscs6601/assignment_3.git
+   ```
+
+2. Navigate to `assignment_3/` directory
+
+3. Activate the environment you created during Assignment 0 
+
+    ```
+    conda activate ai_env
+    ```
+
+4. Run the following command in the command line to install the required packages
+
+    ```
+    pip install -r requirements.txt
+    ```
+    
 Python 3 is recommended and has been tested.
 
 **Please use numpy version 1.15.4**. Without the correct version, there may be errors. 
@@ -71,20 +89,26 @@ You will test your implementation at the end of the section.
 
 _[10 points]_
 
-Use the description of the model above to design a Bayesian network for this model. The 'pgmpy' package is used to represent nodes and conditional probability arcs connecting nodes. Don't worry about the probabilities for now. Use the functions below to create the net. Fill in the function make\_power\_plant\_net()
+Use the description of the model above to design a Bayesian network for this model. The `pgmpy` package is used to represent nodes and conditional probability arcs connecting nodes. Don't worry about the probabilities for now. Use the functions below to create the net. You will write your code in `probability_solution.py`. 
+
+Fill in the function `make_power_plant_net()`
 
 The following commands will create a BayesNet instance add node with name "alarm":
 
     BayesNet = BayesianModel()
     BayesNet.add_node("alarm")
 
-You will use BayesNet.add\_edge() to connect nodes. For example, to connect the alarm and temperature nodes that you've already made (i.e. assuming that temperature affects the alarm probability):
+You will use `BayesNet.add_edge()` to connect nodes. For example, to connect the alarm and temperature nodes that you've already made (i.e. assuming that temperature affects the alarm probability):
 
-Use function BayesianModel.add\_edge(\<parent node name\>,\<child node name\>)
+Use function `BayesNet.add_edge(<parent node name>,<child node name>)`
     
     BayesNet.add_edge("temperature","alarm")
 
-You can run probability\_tests.test\_network\_setup() to make sure your network is set up correctly.
+After you have implemented `make_power_plant_net()`, you can run the following test in the command line to make sure your network is set up correctly.
+
+```
+python probability_tests.py ProbabilityTests.test_network_setup
+```
 
 ### 1b: Setting the probabilities
 
@@ -100,11 +124,13 @@ Assume that the following statements about the system are true:
 
 Knowing these facts, set the conditional probabilities for the necessary variables on the network you just built.
 
-Using pgmpy's factors.discrete.TabularCPD class: if you wanted to set the distribution for node 'A' with two possible values, where P(A) to 70% true, 30% false, you would invoke the following commands:
+Fill in the function `set_probability()`
+
+Using `pgmpy`'s `factors.discrete.TabularCPD` class: if you wanted to set the distribution for node 'A' with two possible values, where P(A) to 70% true, 30% false, you would invoke the following commands:
 
     cpd_a = TabularCPD('A', 2, values=[[0.3], [0.7]])
 
-**Use index 0 to represent FALSE and index 1 to represent TRUE, or you may run into testing issues.**
+**NOTE: Use index 0 to represent FALSE and index 1 to represent TRUE, or you may run into testing issues.**
 
 If you wanted to set the distribution for P(A|G) to be
 
@@ -132,14 +158,18 @@ you would invoke
     cpd_agt = TabularCPD('A', 2, values=[[0.9, 0.8, 0.4, 0.85], \
                         [0.1, 0.2, 0.6, 0.15]], evidence=['G', 'T'], evidence_card=[2, 2])
 
-The key is to remember that first entery represents the probaility for P(A==False), and second entry represents P(A==true).
+The key is to remember that first entry represents the probability for P(A==False), and second entry represents P(A==true).
 
 Add Tabular conditional probability distributions to the bayesian model instance by using following command.
 
     bayes_net.add_cpds(cpd_a, cpd_ag, cpd_agt)
 
 
-You can check your probability distributions with probability_tests.probability_setup_test().
+You can check your probability distributions in the command line with
+
+```
+python probability_tests.py ProbabilityTests.test_probability_setup
+```
 
 ### 1c: Probability calculations : Perform inference
 
@@ -151,9 +181,12 @@ To finish up, you're going to perform inference on the network to calculate the 
 > - the marginal probability that the gauge shows "hot"
 > - the probability that the temperature is actually hot, given that the alarm sounds and the alarm and gauge are both working
 
-You'll fill out the "get_prob" functions to calculate the probabilities.
+You'll fill out the "get_prob" functions to calculate the probabilities:
+- `get_alarm_prob()`
+- `get_gauge_prob()`
+- `get_temperature_prob()`
 
-Here's an example of how to do inference for the marginal probability of the "faulty alarm" node being True (assuming "bayes_net" is your network):
+Here's an example of how to do inference for the marginal probability of the "faulty alarm" node being True (assuming `bayes_net` is your network):
 
     solver = VariableElimination(bayes_net)
     marginal_prob = solver.query(variables=['faulty alarm'])
@@ -187,7 +220,11 @@ Here, we want to estimate the outcome of the matches, given prior knowledge of p
 _[10 points]_
 
 For the first sub-part, consider a network with 3 teams : the Airheads, the Buffoons, and the Clods (A, B and C for short). 3 total matches are played. 
-Build a Bayes Net to represent the three teams and their influences on the match outcomes. Assume the following variable conventions:
+Build a Bayes Net to represent the three teams and their influences on the match outcomes. 
+
+Fill in the function `get_game_network()`
+
+Assume the following variable conventions:
 
 | variable name | description|
 |---------|:------:|
@@ -227,19 +264,31 @@ In addition, assume that the differences in skill levels correspond to the follo
 |2|0.15|0.75|0.10|
 |3|0.05|0.90|0.05|
 
+You can check your network implementation in the command line with
+
+```
+python probability_tests.py ProbabilityTests.test_games_network
+```
+
 ### 2b: Calculate posterior distribution for the 3rd match.
 
 _[5 points]_
 
-Suppose that you know the following outcome of two of the three games: A beats B and A draws with C. Calculate the posterior distribution for the outcome of the **BvC** match in calculate_posterior(). 
+Suppose that you know the following outcome of two of the three games: A beats B and A draws with C. Calculate the posterior distribution for the outcome of the **BvC** match in `calculate_posterior()`. 
 
 Use the **VariableElimination** provided to perform inference.
+
+You can check your posteriors in the command line with
+
+```
+python probability_tests.py ProbabilityTests.test_posterior
+```
 
 In the next two sections, we'll be arriving at the same values by using sampling.
 
 #### Hints Regarding sampling
 
-Hint 1: In both Metropolis-Hastings and Gibbs sampling, you'll need access to each node's probability distribution and nodes. 
+*Hint 1:* In both Metropolis-Hastings and Gibbs sampling, you'll need access to each node's probability distribution and nodes. 
 You can access these by calling: 
 
     A_cpd = bayes_net.get_cpds('A')      
@@ -247,18 +296,18 @@ You can access these by calling:
     AvB_cpd = bayes_net.get_cpds("AvB")
     match_table = AvB_cpd.values
 
-Hint 2: you'll also want to use the random package (e.g. random.randint()) for the probabilistic choices that sampling makes.
+*Hint 2:* you'll also want to use the random package, e.g. `random.randint()`, for the probabilistic choices that sampling makes.
 
-Hint 3: in order to count the sample states later on, you'll want to make sure the sample that you return is hashable. One way to do this is by returning the sample as a tuple.
+*Hint 3:* in order to count the sample states later on, you'll want to make sure the sample that you return is hashable. One way to do this is by returning the sample as a tuple.
 
 ### 2c: Gibbs sampling
 _[15 points]_
 
-Implement the Gibbs sampling algorithm, which is a special case of Metropolis-Hastings. You'll do this in Gibbs_sampler(), which takes a Bayesian network and initial state value as a parameter and returns a sample state drawn from the network's distribution. In case of Gibbs, the returned state differs from the input state at at-most one variable (randomly chosen).
+Implement the Gibbs sampling algorithm, which is a special case of Metropolis-Hastings. You'll do this in `Gibbs_sampler()`, which takes a Bayesian network and initial state value as a parameter and returns a sample state drawn from the network's distribution. In case of Gibbs, the returned state differs from the input state at at-most one variable (randomly chosen).
 
 The method should just consist of a single iteration of the algorithm. If an initial value is not given (initial state is None or and empty list), default to a state chosen uniformly at random from the possible states.
 
-Note: **DO NOT USE the given inference engines or 'pgmpy' samplers to run the sampling method**, since the whole point of sampling is to calculate marginals without running inference. 
+Note: **DO NOT USE the given inference engines or `pgmpy` samplers to run the sampling method**, since the whole point of sampling is to calculate marginals without running inference. 
 
 
      "YOU WILL SCORE 0 POINTS ON THIS ASSIGNMENT IF YOU USE THE GIVEN INFERENCE ENGINES FOR THIS PART"
@@ -271,7 +320,7 @@ You may find [this](http://gandalf.psych.umn.edu/users/schrater/schrater_lab/cou
 
 _[15 points]_
 
-Now you will implement the Metropolis-Hastings algorithm, which is another method for estimating a probability distribution.
+Now you will implement the Metropolis-Hastings algorithm in `MH_sampler()`, which is another method for estimating a probability distribution.
 The general idea of MH is to build an approximation of a latent probability distribution by repeatedly generating a "candidate" value for each random variable in the system, and then probabilistically accepting or rejecting the candidate value based on an underlying acceptance function. Unlike Gibbs, in case of MH, the returned state can differ from the initial state at more than one variable.
 This [cheat sheet](http://www.mit.edu/~ilkery/papers/MetropolisHastingsSampling.pdf) provides a nice intro.
 
@@ -297,10 +346,12 @@ You can choose any N and delta (with the bounds above), as long as the convergen
 
 Repeat this experiment for Metropolis-Hastings sampling.
 
-Which algorithm converges more quickly? By approximately what factor? For instance, if Metropolis-Hastings takes twice as many iterations to converge as Gibbs sampling, you'd say that Gibbs converged faster by a factor of 2. Fill in sampling_question() to answer both parts.
+Fill in the function `compare_sampling()` to perform your experiments
+
+Which algorithm converges more quickly? By approximately what factor? For instance, if Metropolis-Hastings takes twice as many iterations to converge as Gibbs sampling, you'd say that Gibbs converged faster by a factor of 2. Fill in `sampling_question()` to answer both parts.
  
 ### 2f: Return your name
 
 _[1 point]_
 
-A simple task to wind down the assignment. Return you name from the function aptly called return_your_name().
+A simple task to wind down the assignment. Return you name from the function aptly called `return_your_name()`.
