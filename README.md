@@ -40,22 +40,16 @@ Chapter 14: Probabilistic Reasoning
     ```
     pip install -r requirements.txt
     ```
-    
-Python 3 is recommended and has been tested.
-
-**Please use numpy version 1.15.4**. Without the correct version, there may be errors. 
 
 Read [setup.md](./setup.md) for more information regarding set up and using git for the assignment.
 
 ### Submission and Due Date
 
 Please include all of your own code for submission in `probability_solution.py`.  
-Submit this file using **`python submit.py assignment_3`**.  
-**The output of all your submissions can be found on [bonnie.udacity.com](https://bonnie.udacity.com/).**
 
-This assignment is due on both **Bonnie and Canvas by February 24th, 2019 11:59PM UTC-12.**  The submission on Canvas is a backup just in case, and the submission to Bonnie will be officially used for grading.
+This assignment is due on **Gradescope by October 6th, 2019 11:59PM UTC-12.**  
 
-**Important: There is a TOTAL submission limit of 5 on Bonnie for assignment 3. This means you can submit to Bonnie a maximum of 5 times during the duration of the assignment. Please use your submissions carefully and do not submit until you have thoroughly tested your code locally.**
+**Important: There is a TOTAL submission limit of 5 on Gradescope for this assignment. This means you can submit a maximum of 5 times during the duration of the assignment. Please use your submissions carefully and do not submit until you have thoroughly tested your code locally.**
 
 **If you're at 4 submissions, use your fifth and last submission wisely. We are not responsible for a final submission that gets a lower score than a previous submission. We will only use your LAST submission before the deadline for grading.**
 
