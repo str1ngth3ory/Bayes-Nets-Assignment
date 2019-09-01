@@ -34,6 +34,8 @@ Chapter 14: Probabilistic Reasoning
     ```
     conda activate ai_env
     ```
+    
+    In case you used a different environment name, to list of all environments you have on your machine you can run `conda env list`.
 
 4. Run the following command in the command line to install the required packages
 
@@ -45,7 +47,7 @@ Read [setup.md](./setup.md) for more information regarding set up and using git 
 
 ### Submission and Due Date
 
-Please include all of your own code for submission in `probability_solution.py`.  
+Please include all of your own code for submission in `submission.py`.  
 
 This assignment is due on **Gradescope by October 6th, 2019 11:59PM UTC-12.**  
 
@@ -83,7 +85,7 @@ You will test your implementation at the end of the section.
 
 _[10 points]_
 
-Use the description of the model above to design a Bayesian network for this model. The `pgmpy` package is used to represent nodes and conditional probability arcs connecting nodes. Don't worry about the probabilities for now. Use the functions below to create the net. You will write your code in `probability_solution.py`. 
+Use the description of the model above to design a Bayesian network for this model. The `pgmpy` package is used to represent nodes and conditional probability arcs connecting nodes. Don't worry about the probabilities for now. Use the functions below to create the net. You will write your code in `submission.py`. 
 
 Fill in the function `make_power_plant_net()`
 
