@@ -53,7 +53,7 @@ This assignment is due on **Gradescope by October 6th, 2019 11:59PM UTC-12.**
 
 **Important: There is a TOTAL submission limit of 5 on Gradescope for this assignment. This means you can submit a maximum of 5 times during the duration of the assignment. Please use your submissions carefully and do not submit until you have thoroughly tested your code locally.**
 
-**If you're at 4 submissions, use your fifth and last submission wisely. We are not responsible for a final submission that gets a lower score than a previous submission. We will only use your LAST submission before the deadline for grading.**
+**If you're at 4 submissions, use your fifth and last submission wisely. The submission marked as ‘Active’ in Gradescope will be the submission counted towards your grade.**
 
 ### Restrictions
 
