@@ -132,6 +132,7 @@ def compare_sampling(bayes_net, initial_state):
 def sampling_question():
     """Question about sampling performance."""
     # TODO: assign value to choice and factor
+    raise NotImplementedError
     choice = 2
     options = ['Gibbs','Metropolis-Hastings']
     factor = 0
