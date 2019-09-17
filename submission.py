@@ -49,7 +49,7 @@ def get_gauge_prob(bayes_net):
     probability of the gauge 
     showing hot in the 
     power plant system."""
-    # TOOD: finish this function
+    # TODO: finish this function
     raise NotImplementedError
     return gauge_prob
 
