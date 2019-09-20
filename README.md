@@ -280,7 +280,7 @@ You can check your posteriors in the command line with
 python probability_tests.py ProbabilityTests.test_posterior
 ```
 
-In the next two sections, we'll be arriving at the same values by using sampling.
+**NOTE: In the following sections, we'll be arriving at the same values by using sampling.**
 
 #### Hints Regarding sampling
 
