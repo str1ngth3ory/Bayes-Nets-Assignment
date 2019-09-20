@@ -49,7 +49,7 @@ def get_gauge_prob(bayes_net):
     probability of the gauge 
     showing hot in the 
     power plant system."""
-    # TOOD: finish this function
+    # TODO: finish this function
     raise NotImplementedError
     return gauge_prob
 
@@ -132,6 +132,7 @@ def compare_sampling(bayes_net, initial_state):
 def sampling_question():
     """Question about sampling performance."""
     # TODO: assign value to choice and factor
+    raise NotImplementedError
     choice = 2
     options = ['Gibbs','Metropolis-Hastings']
     factor = 0

@@ -6,13 +6,7 @@ Clone this repository recursively:
 
 If you run across certificate authentication issues during the clone, set the git SSL Verify option to false: `git config --global http.sslVerify false`.
 
-## Python Dependencies
-
-The submission scripts depend on the presence of 2 python packages - `requests` and `future`. I also needs numpy version 1.11. If you are missing any of these packages, install them from the online Python registries. The easiest way to do this is through pip:
-
-`pip install -r requirements.txt`
-
-# Keeping your code upto date
+# Keeping your code up to date
 After the clone, we recommend creating a branch and developing your agents on that branch:
 
 `git checkout -b develop`
@@ -48,5 +42,4 @@ Finally, commit the new updates to your branch and continue developing:
 
 # Submit your code
 A friendly reminder: please ensure that your submission is in `probability_solution.py`. 
-To submit your code and have it evaluated, please use `python submit.py assignment_3`.
-
+You will submit your code in Gradescope.
