@@ -1,5 +1,5 @@
 import unittest
-from probability_solution import *
+from submission import *
 """
 Contains various local tests for Assignment 3.
 """
