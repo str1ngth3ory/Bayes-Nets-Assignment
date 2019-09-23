@@ -46,11 +46,9 @@ Chapter 14: Probabilistic Reasoning
 
 Read [setup.md](./setup.md) for more information regarding set up and using git for the assignment.
 
-### Submission and Due Date
+### Submission
 
 Please include all of your own code for submission in `submission.py`.  
-
-This assignment is due on **Gradescope by October 6th, 2019 11:59PM UTC-12.**  
 
 **Important: There is a TOTAL submission limit of 5 on Gradescope for this assignment. This means you can submit a maximum of 5 times during the duration of the assignment. Please use your submissions carefully and do not submit until you have thoroughly tested your code locally.**
 
