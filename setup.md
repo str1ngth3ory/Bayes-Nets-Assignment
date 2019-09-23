@@ -41,5 +41,5 @@ Finally, commit the new updates to your branch and continue developing:
 
 
 # Submit your code
-A friendly reminder: please ensure that your submission is in `probability_solution.py`. 
+A friendly reminder: please ensure that your submission is in `submission.py`. 
 You will submit your code in Gradescope.
