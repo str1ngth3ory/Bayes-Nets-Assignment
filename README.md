@@ -315,7 +315,7 @@ You may find [this](http://gandalf.psych.umn.edu/users/schrater/schrater_lab/cou
 
 _[15 points]_
 
-Now you will implement the Metropolis-Hastings algorithm in `MH_sampler()`, which is another method for estimating a probability distribution.
+Now you will implement the independent Metropolis-Hastings sampling algorithm in `MH_sampler()`, which is another method for estimating a probability distribution.
 The general idea of MH is to build an approximation of a latent probability distribution by repeatedly generating a "candidate" value for each random variable in the system, and then probabilistically accepting or rejecting the candidate value based on an underlying acceptance function. Unlike Gibbs, in case of MH, the returned state can differ from the initial state at more than one variable.
 This [slide deck](https://github.gatech.edu/omscs6601/assignment_3/blob/master/resources/mh%20sampling.pdf)
 and this [cheat sheet](http://www.mit.edu/~ilkery/papers/MetropolisHastingsSampling.pdf) provides a nice intro.
