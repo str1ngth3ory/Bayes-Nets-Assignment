@@ -320,7 +320,7 @@ The general idea of MH is to build an approximation of a latent probability dist
 This [slide deck](https://github.gatech.edu/omscs6601/assignment_3/blob/master/resources/mh%20sampling.pdf)
 and this [cheat sheet](http://www.mit.edu/~ilkery/papers/MetropolisHastingsSampling.pdf) provides a nice intro.
 
-This method method should just perform a single iteration of the algorithm. If an initial value is not given, default to a state chosen uniformly at random from the possible states. 
+This method should just perform a single iteration of the algorithm. If an initial value is not given, default to a state chosen uniformly at random from the possible states. 
 
 Note: **DO NOT USE the given inference engines to run the sampling method**, since the whole point of sampling is to calculate marginals without running inference. 
 
