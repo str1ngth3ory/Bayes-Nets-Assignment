@@ -80,7 +80,7 @@ class ProbabilityTests(unittest.TestCase):
         """Test that the games network has the proper number of nodes and edges."""
         games_net = get_game_network()
         nodes = games_net.nodes()
-        self.assertEqual(len(nodes), 6, msg='Incorrent number of nodes')
+        self.assertEqual(len(nodes), 6, msg='Incorrect number of nodes')
         total_links = games_net.number_of_edges()
         self.assertEqual(total_links, 6, 'Incorrect number of edges')
 
