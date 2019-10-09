@@ -44,8 +44,6 @@ Chapter 14: Probabilistic Reasoning
     pip install -r requirements.txt
     ```
 
-Read [setup.md](./setup.md) for more information regarding set up and using git for the assignment.
-
 ### Submission
 
 Please include all of your own code for submission in `submission.py`.  
