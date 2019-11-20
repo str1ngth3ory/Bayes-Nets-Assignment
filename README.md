@@ -68,11 +68,13 @@ To start, design a basic probabilistic model for the following system:
 
 There's a nuclear power plant in which an alarm is supposed to ring when the gauge reading exceeds a fixed threshold. The gauge reading is based on the actual temperature, and for simplicity, we assume that the temperature is represented as either high or normal. However, the alarm is sometimes faulty. The temperature gauge can also fail, with the chance of failing greater when the temperature is high.
 
+Assume that the following statements about the system are true:
 > 1. The temperature gauge reads the correct temperature with 95% probability when it is not faulty and 20% probability when it is faulty. For simplicity, say that the gauge's "true" value corresponds with its "hot" reading and "false" with its "normal" reading, so the gauge would have a 95% chance of returning "true" when the temperature is hot and it is not faulty.
 > 2. The alarm is faulty 15% of the time.
 > 3. The temperature is hot (call this "true") 20% of the time.
 > 4. When the temperature is hot, the gauge is faulty 80% of the time. Otherwise, the gauge is faulty 5% of the time.
 > 5. The alarm responds correctly to the gauge 55% of the time when the alarm is faulty, and it responds correctly to the gauge 90% of the time when the alarm is not faulty. For instance, when it is faulty, the alarm sounds 55% of the time that the gauge is "hot" and remains silent 55% of the time that the gauge is "normal."
+
 
 Use the following name attributes:
 
@@ -112,11 +114,7 @@ python probability_tests.py ProbabilityTests.test_network_setup
 ### 1b: Setting the probabilities
 
 _[15 points]_
-
-Assume that the following statements about the system are true:
-
-
-Knowing these facts, set the conditional probabilities for the necessary variables on the network you just built.
+Now set the conditional probabilities for the necessary variables on the network you just built.
 
 Fill in the function `set_probability()`
 
