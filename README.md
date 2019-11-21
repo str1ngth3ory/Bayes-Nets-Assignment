@@ -288,9 +288,13 @@ You can access these by calling:
     AvB_cpd = bayes_net.get_cpds("AvB")
     match_table = AvB_cpd.values
 
-*Hint 2:* you'll also want to use the random package, e.g. `random.randint()` or `random.choice()`, for the probabilistic choices that sampling makes.
+*Hint 2:*  While performing sampling, you will have to generate your initial sample by sampling uniformly at random an outcome for each non-evidence variable and by keeping your evidence variables(AvB and CvA) fixed.
 
-*Hint 3:* in order to count the sample states later on, you'll want to make sure the sample that you return is hashable. One way to do this is by returning the sample as a tuple.
+*Hint 3:* You'll also want to use the random package, e.g. `random.randint()` or `random.choice()`, for the probabilistic choices that sampling makes.
+
+*Hint 4:* In order to count the sample states later on, you'll want to make sure the sample that you return is hashable. One way to do this is by returning the sample as a tuple.
+
+
 
 ### 2c: Gibbs sampling
 _[15 points]_
