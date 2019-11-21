@@ -288,7 +288,7 @@ You can access these by calling:
     AvB_cpd = bayes_net.get_cpds("AvB")
     match_table = AvB_cpd.values
 
-*Hint 2:* you'll also want to use the random package, e.g. `random.randint()`, for the probabilistic choices that sampling makes.
+*Hint 2:* you'll also want to use the random package, e.g. `random.randint()` or `random.choice()`, for the probabilistic choices that sampling makes.
 
 *Hint 3:* in order to count the sample states later on, you'll want to make sure the sample that you return is hashable. One way to do this is by returning the sample as a tuple.
 
