@@ -279,7 +279,7 @@ python probability_tests.py ProbabilityTests.test_posterior
 
 **NOTE: In the following sections, we'll be arriving at the same values by using sampling.**
 
-### Hints Regarding sampling for Part 2c and 2d
+## Hints Regarding sampling for Part 2c and 2d
 
 *Hint 1:* In both Metropolis-Hastings and Gibbs sampling, you'll need access to each node's probability distribution and nodes. 
 You can access these by calling: 
