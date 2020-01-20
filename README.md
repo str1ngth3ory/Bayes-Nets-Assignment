@@ -114,6 +114,7 @@ python probability_tests.py ProbabilityTests.test_network_setup
 ### 1b: Setting the probabilities
 
 _[15 points]_
+
 Now set the conditional probabilities for the necessary variables on the network you just built.
 
 Fill in the function `set_probability()`
@@ -288,7 +289,7 @@ You can access these by calling:
     AvB_cpd = bayes_net.get_cpds("AvB")
     match_table = AvB_cpd.values
 
-*Hint 2:*  While performing sampling, you will have to generate your initial sample by sampling uniformly at random an outcome for each non-evidence variable and by keeping your evidence variables(AvB and CvA) fixed.
+*Hint 2:*  While performing sampling, you will have to generate your initial sample by sampling uniformly at random an outcome for each non-evidence variable and by keeping your evidence variables (AvB and CvA) fixed.
 
 *Hint 3:* You'll also want to use the random package, e.g. `random.randint()` or `random.choice()`, for the probabilistic choices that sampling makes.
 
