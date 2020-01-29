@@ -38,10 +38,10 @@ Chapter 14: Probabilistic Reasoning
     
     In case you used a different environment name, to list of all environments you have on your machine you can run `conda env list`.
 
-4. Run the following command in the command line to install the required packages
+4. Run the following command in the command line to install and update the required packages
 
     ```
-    pip install -r requirements.txt
+    pip install pgmpy --upgrade
     ```
 
 ### Submission
@@ -182,14 +182,14 @@ You'll fill out the "get_prob" functions to calculate the probabilities:
 Here's an example of how to do inference for the marginal probability of the "faulty alarm" node being True (assuming `bayes_net` is your network):
 
     solver = VariableElimination(bayes_net)
-    marginal_prob = solver.query(variables=['faulty alarm'])
+    marginal_prob = solver.query(variables=['faulty alarm'], joint=False)
     prob = marginal_prob['faulty alarm'].values
   
 To compute the conditional probability, set the evidence variables before computing the marginal as seen below (here we're computing P('A' = false | 'B' = true, 'C' = False)):
 
 
     solver = VariableElimination(bayes_net)
-    conditional_prob = solver.query(variables=['A'],evidence={'B':1,'C':0})
+    conditional_prob = solver.query(variables=['A'],evidence={'B':1,'C':0}, joint=False)
     prob = conditional_prob['A'].values
 
 If you need to sanity-check to make sure you're doing inference correctly, you can run inference on one of the probabilities that we gave you in 1b. For instance, running inference on P(T=true) should return 0.19999994 (i.e. almost 20%). You can also calculate the answers by hand to double-check.
