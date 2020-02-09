@@ -8,12 +8,13 @@ from numpy import zeros, float32
 import pgmpy
 from pgmpy.models import BayesianModel
 from pgmpy.factors.discrete import TabularCPD
-from pgmpy.inference import VariableElimination
+from ve import VarElimination
 #You are not allowed to use following set of modules from 'pgmpy' Library.
 #
 # pgmpy.sampling.*
 # pgmpy.factors.*
 # pgmpy.estimators.*
+# pgmpy.inference.*
 
 def make_power_plant_net():
     """Create a Bayes Net representation of the above power plant problem. 
