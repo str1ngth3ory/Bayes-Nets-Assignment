@@ -15,7 +15,7 @@ Chapter 13: Quantifying Uncertainty
 Chapter 14: Probabilistic Reasoning  
 
 *Others:*   
-[Markov Chain Monte Carlo](https://github.gatech.edu/omscs6601/assignment_3/blob/master/resources/LESSON1_Notes_MCMC.pdf)  
+[Markov Chain Monte Carlo](http://www.statistics.com/papers/LESSON1_Notes_MCMC.pdf)  
 [Gibbs Sampling](http://gandalf.psych.umn.edu/users/schrater/schrater_lab/courses/AI2/gibbs.pdf)  
 [Metropolis Hastings Sampling - 1](https://github.gatech.edu/omscs6601/assignment_3/blob/master/resources/mh%20sampling.pdf)  
 [Metropolis Hastings Sampling - 2](http://www.mit.edu/~ilkery/papers/MetropolisHastingsSampling.pdf)  
@@ -38,10 +38,10 @@ Chapter 14: Probabilistic Reasoning
     
     In case you used a different environment name, to list of all environments you have on your machine you can run `conda env list`.
 
-4. Run the following command in the command line to install and update the required packages
+4. Run the following command in the command line to install the required packages
 
     ```
-    pip install pgmpy --upgrade
+    pip install -r requirements.txt
     ```
 
 ### Submission
@@ -67,14 +67,6 @@ _[35 points total]_
 To start, design a basic probabilistic model for the following system:
 
 There's a nuclear power plant in which an alarm is supposed to ring when the gauge reading exceeds a fixed threshold. The gauge reading is based on the actual temperature, and for simplicity, we assume that the temperature is represented as either high or normal. However, the alarm is sometimes faulty. The temperature gauge can also fail, with the chance of failing greater when the temperature is high.
-
-Assume that the following statements about the system are true:
-> 1. The temperature gauge reads the correct temperature with 95% probability when it is not faulty and 20% probability when it is faulty. For simplicity, say that the gauge's "true" value corresponds with its "hot" reading and "false" with its "normal" reading, so the gauge would have a 95% chance of returning "true" when the temperature is hot and it is not faulty.
-> 2. The alarm is faulty 15% of the time.
-> 3. The temperature is hot (call this "true") 20% of the time.
-> 4. When the temperature is hot, the gauge is faulty 80% of the time. Otherwise, the gauge is faulty 5% of the time.
-> 5. The alarm responds correctly to the gauge 55% of the time when the alarm is faulty, and it responds correctly to the gauge 90% of the time when the alarm is not faulty. For instance, when it is faulty, the alarm sounds 55% of the time that the gauge is "hot" and remains silent 55% of the time that the gauge is "normal."
-
 
 Use the following name attributes:
 
@@ -115,7 +107,15 @@ python probability_tests.py ProbabilityTests.test_network_setup
 
 _[15 points]_
 
-Now set the conditional probabilities for the necessary variables on the network you just built.
+Assume that the following statements about the system are true:
+
+> 1. The temperature gauge reads the correct temperature with 95% probability when it is not faulty and 20% probability when it is faulty. For simplicity, say that the gauge's "true" value corresponds with its "hot" reading and "false" with its "normal" reading, so the gauge would have a 95% chance of returning "true" when the temperature is hot and it is not faulty.
+> 2. The alarm is faulty 15% of the time.
+> 3. The temperature is hot (call this "true") 20% of the time.
+> 4. When the temperature is hot, the gauge is faulty 80% of the time. Otherwise, the gauge is faulty 5% of the time.
+> 5. The alarm responds correctly to the gauge 55% of the time when the alarm is faulty, and it responds correctly to the gauge 90% of the time when the alarm is not faulty. For instance, when it is faulty, the alarm sounds 55% of the time that the gauge is "hot" and remains silent 55% of the time that the gauge is "normal."
+
+Knowing these facts, set the conditional probabilities for the necessary variables on the network you just built.
 
 Fill in the function `set_probability()`
 
@@ -182,14 +182,14 @@ You'll fill out the "get_prob" functions to calculate the probabilities:
 Here's an example of how to do inference for the marginal probability of the "faulty alarm" node being True (assuming `bayes_net` is your network):
 
     solver = VariableElimination(bayes_net)
-    marginal_prob = solver.query(variables=['faulty alarm'], joint=False)
+    marginal_prob = solver.query(variables=['faulty alarm'])
     prob = marginal_prob['faulty alarm'].values
   
 To compute the conditional probability, set the evidence variables before computing the marginal as seen below (here we're computing P('A' = false | 'B' = true, 'C' = False)):
 
 
     solver = VariableElimination(bayes_net)
-    conditional_prob = solver.query(variables=['A'],evidence={'B':1,'C':0}, joint=False)
+    conditional_prob = solver.query(variables=['A'],evidence={'B':1,'C':0})
     prob = conditional_prob['A'].values
 
 If you need to sanity-check to make sure you're doing inference correctly, you can run inference on one of the probabilities that we gave you in 1b. For instance, running inference on P(T=true) should return 0.19999994 (i.e. almost 20%). You can also calculate the answers by hand to double-check.
@@ -279,7 +279,7 @@ python probability_tests.py ProbabilityTests.test_posterior
 
 **NOTE: In the following sections, we'll be arriving at the same values by using sampling.**
 
-#### Hints Regarding sampling for Part 2c, 2d, and 2e
+#### Hints Regarding sampling
 
 *Hint 1:* In both Metropolis-Hastings and Gibbs sampling, you'll need access to each node's probability distribution and nodes. 
 You can access these by calling: 
@@ -289,13 +289,9 @@ You can access these by calling:
     AvB_cpd = bayes_net.get_cpds("AvB")
     match_table = AvB_cpd.values
 
-*Hint 2:*  While performing sampling, you will have to generate your initial sample by sampling uniformly at random an outcome for each non-evidence variable and by keeping the outcome of your evidence variables (`AvB` and `CvA`) fixed.
+*Hint 2:* you'll also want to use the random package, e.g. `random.randint()`, for the probabilistic choices that sampling makes.
 
-*Hint 3:* You'll also want to use the random package, e.g. `random.randint()` or `random.choice()`, for the probabilistic choices that sampling makes.
-
-*Hint 4:* In order to count the sample states later on, you'll want to make sure the sample that you return is hashable. One way to do this is by returning the sample as a tuple.
-
-
+*Hint 3:* in order to count the sample states later on, you'll want to make sure the sample that you return is hashable. One way to do this is by returning the sample as a tuple.
 
 ### 2c: Gibbs sampling
 _[15 points]_
@@ -318,7 +314,7 @@ You may find [this](http://gandalf.psych.umn.edu/users/schrater/schrater_lab/cou
 _[15 points]_
 
 Now you will implement the independent Metropolis-Hastings sampling algorithm in `MH_sampler()`, which is another method for estimating a probability distribution.
-The general idea of MH is to build an approximation of a latent probability distribution by repeatedly generating a "candidate" value for each sample vector comprising of the random variables in the system, and then probabilistically accepting or rejecting the candidate value based on an underlying acceptance function. Unlike Gibbs, in case of MH, the returned state can differ from the initial state at more than one variable.
+The general idea of MH is to build an approximation of a latent probability distribution by repeatedly generating a "candidate" value for each random variable in the system, and then probabilistically accepting or rejecting the candidate value based on an underlying acceptance function. Unlike Gibbs, in case of MH, the returned state can differ from the initial state at more than one variable.
 This [slide deck](https://github.gatech.edu/omscs6601/assignment_3/blob/master/resources/mh%20sampling.pdf)
 and this [cheat sheet](http://www.mit.edu/~ilkery/papers/MetropolisHastingsSampling.pdf) provides a nice intro.
 
