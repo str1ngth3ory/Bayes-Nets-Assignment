@@ -348,4 +348,4 @@ Which algorithm converges more quickly? By approximately what factor? For instan
 
 _[1 point]_
 
-A simple task to wind down the assignment. Return you name from the function aptly called `return_your_name()`.
+A simple task to wind down the assignment. Return your name from the function aptly called `return_your_name()`.
