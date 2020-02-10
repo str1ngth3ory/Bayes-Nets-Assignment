@@ -41,7 +41,7 @@ Chapter 14: Probabilistic Reasoning
 4. Run the following command in the command line to install and update the required packages
 
     ```
-    pip install pgmpy --upgrade
+    pip install pgmpy==0.1.10 --upgrade
     ```
 
 ### Submission
