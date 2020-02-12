@@ -193,7 +193,7 @@ To compute the conditional probability, set the evidence variables before comput
     conditional_prob = solver.query(variables=['A'],evidence={'B':1,'C':0}, joint=False)
     prob = conditional_prob['A'].values
 
-If you need to sanity-check to make sure you're doing inference correctly, you can run inference on one of the probabilities that we gave you in 1b. For instance, running inference on P(T=true) should return 0.19999994 (i.e. almost 20%). You can also calculate the answers by hand to double-check.
+If you need to sanity-check to make sure you're doing inference correctly, you can run inference on one of the probabilities that we gave you in 1a. For instance, running inference on P(T=true) should return 0.19999994 (i.e. almost 20%). You can also calculate the answers by hand to double-check.
 
 ## Part 2: Sampling
 
