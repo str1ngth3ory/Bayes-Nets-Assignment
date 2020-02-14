@@ -69,6 +69,12 @@ To start, design a basic probabilistic model for the following system:
 
 There's a nuclear power plant in which an alarm is supposed to ring when the gauge reading exceeds a fixed threshold. The gauge reading is based on the actual temperature, and for simplicity, we assume that the temperature is represented as either high or normal. However, the alarm is sometimes faulty. The temperature gauge can also fail, with the chance of failing greater when the temperature is high.
 
+You will test your implementation at the end of the section.
+
+### 1a: Casting the net
+
+_[10 points]_
+
 Assume that the following statements about the system are true:
 > 1. The temperature gauge reads the correct temperature with 95% probability when it is not faulty and 20% probability when it is faulty. For simplicity, say that the gauge's "true" value corresponds with its "hot" reading and "false" with its "normal" reading, so the gauge would have a 95% chance of returning "true" when the temperature is hot and it is not faulty.
 > 2. The alarm is faulty 15% of the time.
@@ -84,12 +90,6 @@ Use the following name attributes:
 >- "gauge"                   (high = True, normal = False)
 >- "faulty gauge"
 >- "temperature"             (high = True, normal = False)  
-
-You will test your implementation at the end of the section.
-
-### 1a: Casting the net
-
-_[10 points]_
 
 Use the description of the model above to design a Bayesian network for this model. The `pgmpy` package is used to represent nodes and conditional probability arcs connecting nodes. Don't worry about the probabilities for now. Use the functions below to create the net. You will write your code in `submission.py`. 
 
