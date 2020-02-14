@@ -69,7 +69,7 @@ To start, design a basic probabilistic model for the following system:
 
 There's a nuclear power plant in which an alarm is supposed to ring when the gauge reading exceeds a fixed threshold. The gauge reading is based on the actual temperature, and for simplicity, we assume that the temperature is represented as either high or normal. However, the alarm is sometimes faulty. The temperature gauge can also fail, with the chance of failing greater when the temperature is high.
 
-You will test your implementation at the end of the section.
+You will test your implementation at the end of each section.
 
 ### 1a: Casting the net
 
