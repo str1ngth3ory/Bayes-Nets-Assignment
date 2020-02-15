@@ -193,7 +193,7 @@ To compute the conditional probability, set the evidence variables before comput
     conditional_prob = solver.query(variables=['A'],evidence={'B':1,'C':0}, joint=False)
     prob = conditional_prob['A'].values
     
-__NOTE__: marginal_prob and conditional_prob return two probabilities corresponding to `[False, True]` case. You must index into the correct position to obtain the correct result. 
+__NOTE__: `marginal_prob` and `conditional_prob` return two probabilities corresponding to `[False, True]` case. You must index into the correct position in `prob` to obtain the particular probability value you are looking for. 
 
 If you need to sanity-check to make sure you're doing inference correctly, you can run inference on one of the probabilities that we gave you in 1a. For instance, running inference on P(T=true) should return 0.20 (i.e. 20%). However, due to imprecision in some machines it could appear as 0.199xx. You can also calculate the answers by hand to double-check.
 
