@@ -3,7 +3,7 @@ numpy
 scipy
 pandas
 pyparsing
-torch
+torch==1.4.0
 statsmodels
 tqdm
 joblib
