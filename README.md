@@ -284,6 +284,8 @@ python probability_tests.py ProbabilityTests.test_posterior
 
 **NOTE: In the following sections, we'll be arriving at the same values by using sampling.**
 
+**NOTE: pgmpy's VariableElimination may sometimes produce incorrect Posterior Probability distributions. While, it doesn't have an impact on the Assignment, we discourage using it beyong the scope of this Assignment.**
+
 #### Hints Regarding sampling for Part 2c, 2d, and 2e
 
 *Hint 1:* In both Metropolis-Hastings and Gibbs sampling, you'll need access to each node's probability distribution and nodes. 
