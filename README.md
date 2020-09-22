@@ -7,7 +7,7 @@ In this assignment, you will work with probabilistic models known as Bayesian ne
 You will find the following resources helpful for this assignment.
 
 *Canvas Videos:*  
-Lecture 5 on Probability
+Lecture 5 on Probability<br>
 Lecture 6 on Bayes Nets
 
 *Textbook:*   
