@@ -7,8 +7,8 @@ In this assignment, you will work with probabilistic models known as Bayesian ne
 You will find the following resources helpful for this assignment.
 
 *Canvas Videos:*  
-[Lecture 5 on Probability](https://gatech.instructure.com/courses/151546/pages/5-probability?module_item_id=806766)  
-[Lecture 6 on Bayes Nets](https://gatech.instructure.com/courses/151546/pages/6-bayes-nets?module_item_id=806856)  
+Lecture 5 on Probability
+Lecture 6 on Bayes Nets
 
 *Textbook:*   
 Chapter 13: Quantifying Uncertainty  
