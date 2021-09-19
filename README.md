@@ -85,11 +85,13 @@ Assume that the following statements about the system are true:
 
 Use the following name attributes:
 
->- "alarm"
->- "faulty alarm"
->- "gauge"                   (high = True, normal = False)
->- "faulty gauge"
->- "temperature"             (high = True, normal = False)  
+
+>- "alarm" node: Represents the probability that an alarm system will be going off or not.
+>- "faulty alarm" node: Represents the probability that the alarm system is broken or not
+>- "gauge": Represents the probability that the gauge will show either "above the threshold" or "below the threshold" (high = True, normal = False)
+>- "faulty gauge": Represents the probability that the gauge is broken
+>- "temperature": Represents the probability that the temperature is HOT or NOT HOT  (high = True, normal = False)
+
 
 Use the description of the model above to design a Bayesian network for this model. The `pgmpy` package is used to represent nodes and conditional probability arcs connecting nodes. Don't worry about the probabilities for now. Use the functions below to create the net. You will write your code in `submission.py`. 
 
@@ -126,6 +128,7 @@ Using `pgmpy`'s `factors.discrete.TabularCPD` class: if you wanted to set the di
 
 **NOTE: Use index 0 to represent FALSE and index 1 to represent TRUE, or you may run into testing issues.**
 
+
 If you wanted to set the distribution for P(A|G) to be
 
 |  G  |P(A=true given G)|
@@ -137,6 +140,8 @@ you would invoke:
 
     cpd_ag = TabularCPD('A', 2, values=[[0.15, 0.25], \
                         [ 0.85, 0.75]], evidence=['G'], evidence_card=[2])
+
+**Reference** for the function: https://pgmpy.org/_modules/pgmpy/factors/discrete/CPD.html
 
 Modeling a three-variable relationship is a bit trickier. If you wanted to set the following distribution for P(A|G,T) to be
 
