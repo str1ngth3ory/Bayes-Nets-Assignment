@@ -18,7 +18,7 @@ Chapter 14: Probabilistic Reasoning
 [Markov Chain Monte Carlo](https://github.gatech.edu/omscs6601/assignment_3/blob/master/resources/LESSON1_Notes_MCMC.pdf)  
 [Gibbs Sampling](http://gandalf.psych.umn.edu/users/schrater/schrater_lab/courses/AI2/gibbs.pdf)  
 [Metropolis Hastings Sampling - 1](https://github.gatech.edu/omscs6601/assignment_3/blob/master/resources/mh%20sampling.pdf)  
-[Metropolis Hastings Sampling - 2](http://www.mit.edu/~ilkery/papers/MetropolisHastingsSampling.pdf)  
+
 
 ### Setup
 
