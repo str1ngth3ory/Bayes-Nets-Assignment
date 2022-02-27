@@ -9,6 +9,9 @@ import pgmpy
 from pgmpy.models import BayesianModel
 from pgmpy.factors.discrete import TabularCPD
 from pgmpy.inference import VariableElimination
+
+import random
+import collections
 #You are not allowed to use following set of modules from 'pgmpy' Library.
 #
 # pgmpy.sampling.*
@@ -57,7 +60,7 @@ def get_alarm_prob(bayes_net):
     solver = VariableElimination(bayes_net)
     marginal_prob = solver.query(variables=['alarm'], joint=False)
     alarm_prob = marginal_prob['alarm'].values
-    return alarm_prob
+    return alarm_prob[1]
 
 
 def get_gauge_prob(bayes_net):
@@ -68,7 +71,7 @@ def get_gauge_prob(bayes_net):
     solver = VariableElimination(bayes_net)
     marginal_prob = solver.query(variables=['gauge'], joint=False)
     gauge_prob = marginal_prob['gauge'].values
-    return gauge_prob
+    return gauge_prob[1]
 
 
 def get_temperature_prob(bayes_net):
@@ -81,7 +84,7 @@ def get_temperature_prob(bayes_net):
     conditional_prob = solver.query(variables=['temperature'], \
                         evidence={'alarm':1,'faulty alarm':0, 'faulty gauge':0}, joint=False)
     temp_prob = conditional_prob['temperature'].values
-    return temp_prob
+    return temp_prob[1]
 
 
 def get_game_network():
@@ -144,10 +147,72 @@ def Gibbs_sampler(bayes_net, initial_state):
     Returns the new state sampled from the probability distribution as a tuple of length 6.
     Return the sample as a tuple.
     """
+    if initial_state == None or initial_state == ():
+        sample = [0 for _ in range(6)]
+        for i in range(0,3):
+            sample[i] = random.randint(0,3)
+        sample[3] = 0
+        sample[4] = random.randint(0,2)
+        sample[5] = 2
+        return tuple(sample)
+
     sample = tuple(initial_state)
-    # TODO: finish this function
-    raise NotImplementedError
-    return sample
+    vars = ['A','B','C','AvB','BvC','CvA']
+    rand_var = random.choice([0,1,2,4])
+    if rand_var == 4:
+        match_table = bayes_net.get_cpds('BvC').values
+        p_var = [match_table[0][sample[1]][sample[2]], \
+                match_table[1][sample[1]][sample[2]], \
+                match_table[2][sample[1]][sample[2]]]
+        sample = list(sample)
+        sample[4] = random.choices([0,1,2],weights=p_var)[0]
+        # solver = VariableElimination(bayes_net)
+        # conditional_prob = solver.query(variables=[vars[4]], \
+        #                         evidence={'A':sample[0],'B':sample[1],'C':sample[2],'AvB':sample[3],'CvA':sample[5]}, joint=False)
+        # print(p_var)
+        # print(conditional_prob[vars[rand_var]].values)
+    else:
+        p_var = []
+        a = vars[rand_var]
+        if rand_var == 0:
+            b1,b2,c1,c2,a2 = 'B','C','AvB','CvA','BvC'
+            b1_idx,b2_idx,c1_idx,c2_idx,a2_idx = 1,2,3,5,4
+        elif rand_var == 1:
+            b1,b2,c1,c2,a2 = 'A','C','AvB','BvC','CvA'
+            b1_idx,b2_idx,c1_idx,c2_idx,a2_idx = 0,2,3,4,5
+        elif rand_var == 2:
+            b1,b2,c1,c2,a2 = 'A','B','CvA','BvC','AvB'
+            b1_idx,b2_idx,c1_idx,c2_idx,a2_idx = 0,1,5,4,3
+        mt_c1 = bayes_net.get_cpds(c1).values
+        mt_c2 = bayes_net.get_cpds(c2).values
+        tt_a = bayes_net.get_cpds(a).values
+        tt_b1 = bayes_net.get_cpds(b1).values
+        tt_b2 = bayes_net.get_cpds(b2).values
+        p_a_c1b1c2b2 = list()
+        p_b1 = tt_b1[sample[b1_idx]]
+        p_b2 = tt_b2[sample[b2_idx]]
+        for i in range(4):
+            p_a = tt_a[i]
+            if c1[0] == a:
+                p_a_v_b1 = mt_c1[sample[c1_idx]][i][sample[b1_idx]]
+            else:
+                p_a_v_b1 = mt_c1[sample[c1_idx]][sample[b1_idx]][i]
+            if c2[0] == a:
+                p_a_v_b2 = mt_c2[sample[c2_idx]][i][sample[b2_idx]]
+            else:
+                p_a_v_b2 = mt_c2[sample[c2_idx]][sample[b2_idx]][i]
+            p_a_c1b1c2b2.append(p_a*p_b1*p_b2*p_a_v_b1*p_a_v_b2)
+        # print(p_a_c1b1c2b2)
+        p_var = [p_a_c1b1c2b2[i]/sum(p_a_c1b1c2b2) for i in range(4)]
+        # print(p_var)
+        # solver = VariableElimination(bayes_net)
+        # conditional_prob = solver.query(variables=[a], \
+        #                         evidence={b1:sample[b1_idx],b2:sample[b2_idx],c1:sample[c1_idx],c2:sample[c2_idx],a2:sample[a2_idx]}, joint=False)
+        # print(conditional_prob[vars[rand_var]].values)
+        # print(conditional_prob[a])
+        sample = list(sample)
+        sample[rand_var] = random.choices([0,1,2,3],weights=p_var)[0]
+    return tuple(sample)
 
 
 def MH_sampler(bayes_net, initial_state):
@@ -157,39 +222,114 @@ def MH_sampler(bayes_net, initial_state):
     index 3-5: represent results of matches AvB, BvC, CvA (values lie in [0,2] inclusive)
     Returns the new state sampled from the probability distribution as a tuple of length 6.
     """
-    A_cpd = bayes_net.get_cpds("A")
-    AvB_cpd = bayes_net.get_cpds("AvB")
-    match_table = AvB_cpd.values
-    team_table = A_cpd.values
-    sample = tuple(initial_state)
-    # TODO: finish this function
-    raise NotImplementedError
-    return sample
+    def _joint_p(state):
+        a, b, c, avb, bvc, cva = state
+        mt_avb = bayes_net.get_cpds('AvB').values
+        mt_bvc = bayes_net.get_cpds('BvC').values
+        mt_cva = bayes_net.get_cpds('CvA').values
+        tt_a = bayes_net.get_cpds('A').values
+        tt_b = bayes_net.get_cpds('B').values
+        tt_c = bayes_net.get_cpds('C').values
+        return tt_a[a]*tt_b[b]*tt_c[c]*mt_avb[avb][a][b]*mt_bvc[bvc][b][c]*mt_cva[cva][c][a]
+
+    sample = [0 for _ in range(6)]
+    for i in range(0,3):
+        sample[i] = random.randint(0,3)
+    sample[3] = 0
+    sample[4] = random.randint(0,2)
+    sample[5] = 2
+
+    if initial_state == None or initial_state == ():
+        return tuple(sample)
+
+    u = random.random()
+    p_x_t = _joint_p(sample)
+    p_x_t_1 = _joint_p(initial_state)
+    if u <= (p_x_t/p_x_t_1):
+        return tuple(sample)
+    else:
+        return initial_state
 
 
 def compare_sampling(bayes_net, initial_state):
     """Compare Gibbs and Metropolis-Hastings sampling by calculating how long it takes for each method to converge."""
+    def _ev_sampling(N, sampling_method, samples, initial_state):
+        count = 0
+        reject_count = 0
+        p_var = []
+        temp = tuple()
+        if sampling_method is Gibbs_sampler:
+            while count < N:
+                initial_state = sampling_method(bayes_net, initial_state)
+                samples.append(initial_state[4])
+                count += 1
+        elif sampling_method is MH_sampler:
+            bool_reject = 0
+            while count < N:
+                temp = sampling_method(bayes_net, initial_state)
+                samples.append(temp[4])
+                count += 1
+                if temp is initial_state:
+                    reject_count += 1
+                initial_state = temp
+        samples_freq = collections.Counter(samples)
+        for i in range(3):
+            p_var.append(samples_freq[i]/sum(samples_freq.values()))
+        ev = 0
+        for i in range(3):
+            ev += i*p_var[i]
+        if sampling_method is Gibbs_sampler:
+            return ev, p_var
+        elif sampling_method is MH_sampler:
+            return ev, p_var, reject_count
+
+    N = 500
     Gibbs_count = 0
     MH_count = 0
     MH_rejection_count = 0
     Gibbs_convergence = [0,0,0] # posterior distribution of the BvC match as produced by Gibbs
     MH_convergence = [0,0,0] # posterior distribution of the BvC match as produced by MH
-    # TODO: finish this function
-    raise NotImplementedError
+    if initial_state != None and initial_state != ():
+        Gibbs_count += 1
+        MH_count += 1
+
+    samples = []
+    delta = 1
+    last_ev = 0
+    current_ev, Gibbs_convergence = _ev_sampling(N, Gibbs_sampler, samples, initial_state)
+    Gibbs_count += N
+    while delta > 0.0001:
+        last_ev = current_ev
+        current_ev, Gibbs_convergence = _ev_sampling(N, Gibbs_sampler, samples, initial_state)
+        delta = abs(current_ev - last_ev)
+        Gibbs_count += N
+
+    samples = []
+    delta = 1
+    last_ev = 0
+    current_ev, MH_convergence, rej_count = _ev_sampling(N, MH_sampler, samples, initial_state)
+    MH_count += N
+    MH_rejection_count += rej_count
+    while delta > 0.001:
+        last_ev = current_ev
+        current_ev, MH_convergence, rej_count = _ev_sampling(N, MH_sampler, samples, initial_state)
+        delta = abs(current_ev - last_ev)
+        MH_count += N
+        MH_rejection_count += rej_count
+
     return Gibbs_convergence, MH_convergence, Gibbs_count, MH_count, MH_rejection_count
 
 
 def sampling_question():
     """Question about sampling performance."""
     # TODO: assign value to choice and factor
-    raise NotImplementedError
     choice = 2
     options = ['Gibbs','Metropolis-Hastings']
-    factor = 0
-    return options[choice], factor
+    factor = 4
+    return options[1], factor
 
 
 def return_your_name():
     """Return your name from this function"""
     # TODO: finish this function
-    raise NotImplementedError
+    return 'Zi Sang'
